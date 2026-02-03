@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { user } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 export const appRouter = createTRPCRouter({
   register: baseProcedure
     .input(

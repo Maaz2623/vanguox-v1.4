@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/server";
 import { useTRPC } from "@/trpc/client";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export function SignUpForm() {
   const [firstName, setFirstName] = useState("");
@@ -34,10 +36,12 @@ export function SignUpForm() {
         },
         {
           onError: (error) => {
-            alert(error.message);
+            toast.error(error.message, {
+              position: "top-center",
+            });
           },
           onSuccess: (data) => {
-            alert(data);
+            redirect(`/sign-up/email-verification`);
           },
         }
       );
