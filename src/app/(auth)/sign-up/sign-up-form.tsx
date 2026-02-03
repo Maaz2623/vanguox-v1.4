@@ -6,6 +6,9 @@ import { cn } from "@/lib/utils";
 import { Label } from "@/ui/aceternity/label";
 import { Input } from "@/ui/aceternity/input";
 import { Button } from "@/components/ui/button";
+import { trpc } from "@/trpc/server";
+import { useTRPC } from "@/trpc/client";
+import { useMutation } from "@tanstack/react-query";
 
 export function SignUpForm() {
   const [firstName, setFirstName] = useState("");
@@ -14,20 +17,30 @@ export function SignUpForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const trpc = useTRPC();
+
+  const registerMutation = useMutation(trpc.register.mutationOptions());
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (confirmPassword !== password) {
-        console.log("Passwords don't match");
-      } else {
-        console.log({
-          firstName,
+      registerMutation.mutate(
+        {
+          firstName: firstName,
           lastName,
           email,
           password,
           confirmPassword,
-        });
-      }
+        },
+        {
+          onError: (error) => {
+            alert(error.message);
+          },
+          onSuccess: (data) => {
+            alert(data);
+          },
+        }
+      );
     } catch (error) {
       console.log(error);
     }
