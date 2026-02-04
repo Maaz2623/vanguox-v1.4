@@ -10,9 +10,7 @@ import { useRouter } from "next/navigation";
 
 export function SignUpForm() {
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
-
   return (
     <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
